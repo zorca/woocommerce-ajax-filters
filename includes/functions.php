@@ -415,6 +415,7 @@ if( ! function_exists( 'br_aapf_args_parser' ) ){
         if ( ! empty($taxonomies) ) {
             $tax_query['relation'] = 'AND';
             if ( $taxonomies ) {
+				$tax_tpm = [ 'relation' => 'OR' ];
                 foreach ( $taxonomies as $k => $v ) {
                     if ( $taxonomies_operator[ $k ] == 'AND' ) {
                         $op = 'AND';
@@ -439,11 +440,12 @@ if( ! function_exists( 'br_aapf_args_parser' ) ){
                             'is_berocket'       => true
                         ));
                     }
-                    $tax_query[] = $current_tax_query;
+                    $tax_tpm[] = $current_tax_query;
                 }
+				$tax_query[] = $tax_tpm;
             }
         }
-
+		
         if ( ! empty($tags) ) {
             $args['product_tag'] = $tags;
         }
